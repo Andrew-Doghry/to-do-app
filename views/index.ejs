@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/app.css">
+</head>
+
+<body class="flex items-center justify-center h-screen bg-black">
+    <div class="flex flex-col w-[80vw] h-[80vh] m-auto bg-slate-900/50 rounded-lg mainApp relative overflow-x-hidden">
+        <div class="p-1 font-bold text-center text-white capitalize rounded-t-lg bg-gray-600/50">to do</div>
+        <div class="toDoList">
+            <% tasks.forEach(e=>{%>
+                <div class="added-card">
+                    <p>
+                        <%=e.data%>
+                    </p>
+                    <button class="danger button delete" key="<%=e.id%>">delete</button>
+                </div>
+                <%}) %>
+        </div>
+        <div class="flex justify-between w-4/5 p-2 mx-auto mt-3 rounded-lg bg-gray-300/50 add-card">
+            <input type="text" class="p-2 text-sm w-[70%] rounded-lg outline-none DoItem">
+            <button class="w-[100px] button primary capitalize " id="add">add</button>
+        </div>
+
+
+
+        <div class="absolute flex gap-2 bottom-3 right-3">
+            <!-- <button class="w-[100px] button primary capitalize add">add</button> -->
+            <!-- <button class="w-[100px] button danger  capitalize delAll">delete </button> -->
+            <button class="w-[100px] button danger  capitalize delAll">delete all</button>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const add = document.getElementById("add")
+    const input = document.querySelector(".DoItem")
+    const theList = document.querySelector(".toDoList")
+    const deletetAll = document.querySelector(".delAll")
+    const deleteButtons = document.querySelectorAll(".delete")
+    let id = 0;
+    deleteButtons.forEach(e => {
+        e.addEventListener('click', async event => {
+            event.preventDefault();
+            e.parentElement.remove()
+            let key = +e.getAttribute("key")
+            await fetch(`http://localhost:3003/${key}`, {
+                method: "DELETE"
+            })
+        })
+    })
+    add.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (input.value != '') {
+            createAddedCard(input.value)
+            const data = {
+                id: id,
+                data: input.value
+
+            }
+            const response = await fetch('http://localhost:3003/', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+            input.value = '';
+            id++;
+            return
+        }
+        console.log("no content to add")
+    })
+    deletetAll.addEventListener('click', async (e) => {
+        document.querySelectorAll('.added-card').forEach(e => e.remove())
+        const resp = await fetch("http://localhost:3003/", {
+            method: "DELETE"
+        })
+
+        id = 0;
+    })
+
+
+    function createAddedCard(inputText) {
+        const card = document.createElement('div')
+        card.classList.add('added-card')
+        const paragraph = document.createElement("p")
+        paragraph.innerText = inputText
+        card.appendChild(paragraph)
+        const delButton = document.createElement('button')
+        delButton.innerHTML = "delete"
+        delButton.classList.add('button', 'danger', 'delete')
+        delButton.setAttribute("key", id)
+        delButton.addEventListener('click', async (e) => {
+            delButton.parentElement.remove()
+            await fetch(`http://localhost:3003/${delButton.getAttribute('key')}`, {
+                method: "DELETE"
+            })
+        })
+        card.appendChild(delButton)
+        theList.appendChild(card)
+    }
+
+
+
+
+
+</script>
+
+</html>
