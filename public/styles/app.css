@@ -750,6 +750,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
+.bg-slate-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
 .object-none {
   -o-object-fit: none;
      object-fit: none;
@@ -827,4 +831,14 @@ video {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+
+.placeholder\:capitalize::-moz-placeholder {
+  text-transform: capitalize;
+}
+
+
+.placeholder\:capitalize::placeholder {
+  text-transform: capitalize;
 }

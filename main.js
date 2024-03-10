@@ -23,18 +23,21 @@ app.post("/", (req, res) => {
     }
     res.sendStatus(204)
 })
+app.delete('/admin', (req, res) => {
+    tasks.data = []
+    console.log("data deleted")
+    res.sendStatus(204)
+})
+app.get('/admin', (rea, res) => {
+    res.render(path.join(__dirname, "views/admin.ejs"), { tasks: tasks.data })
+})
 app.delete('/:id', (req, res) => {
     const id = req.params.id;
     console.log(id)
     tasks.DeleteOne(+id)
-    res.sendStatus(200)
-})
-app.delete('/', (req, res) => {
-    tasks.data = []
-    res.sendStatus(204)
 })
 app.listen(3003, () => {
-    console.log('listening to port :3003')
+    console.log('listening to port :8080')
 })
 
 

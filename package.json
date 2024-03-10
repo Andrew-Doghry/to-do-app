@@ -2,8 +2,9 @@
   "name": "ejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "run": "node main.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon main.js & postcss ./public/styles/tailwind.css -o ./public/styles/app.css --watch"
   },

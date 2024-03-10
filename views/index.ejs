@@ -17,12 +17,13 @@
                     <p>
                         <%=e.data%>
                     </p>
-                    <button class="danger button delete" key="<%=e.id%>">delete</button>
+                    <!-- <button class="danger button delete" key="<%=e.id%>">delete</button> -->
                 </div>
                 <%}) %>
         </div>
         <div class="flex justify-between w-4/5 p-2 mx-auto mt-3 rounded-lg bg-gray-300/50 add-card">
-            <input type="text" class="p-2 text-sm w-[70%] rounded-lg outline-none DoItem">
+            <input type="text" class="p-2 text-sm w-[70%] rounded-lg outline-none DoItem placeholder:capitalize"
+                placeholder="insert text here" id="input">
             <button class="w-[100px] button primary capitalize " id="add">add</button>
         </div>
 
@@ -31,7 +32,6 @@
         <div class="absolute flex gap-2 bottom-3 right-3">
             <!-- <button class="w-[100px] button primary capitalize add">add</button> -->
             <!-- <button class="w-[100px] button danger  capitalize delAll">delete </button> -->
-            <button class="w-[100px] button danger  capitalize delAll">delete all</button>
         </div>
 
     </div>
@@ -41,9 +41,11 @@
     const add = document.getElementById("add")
     const input = document.querySelector(".DoItem")
     const theList = document.querySelector(".toDoList")
-    const deletetAll = document.querySelector(".delAll")
     const deleteButtons = document.querySelectorAll(".delete")
     let id = 0;
+    window.onload = () => {
+        input.focus()
+    }
     deleteButtons.forEach(e => {
         e.addEventListener('click', async event => {
             event.preventDefault();
@@ -61,7 +63,6 @@
             const data = {
                 id: id,
                 data: input.value
-
             }
             const response = await fetch('http://localhost:3003/', {
                 method: "POST",
@@ -73,17 +74,13 @@
             input.value = '';
             id++;
             return
+            input.focus()
         }
+        input.focus()
         console.log("no content to add")
     })
-    deletetAll.addEventListener('click', async (e) => {
-        document.querySelectorAll('.added-card').forEach(e => e.remove())
-        const resp = await fetch("http://localhost:3003/", {
-            method: "DELETE"
-        })
 
-        id = 0;
-    })
+
 
 
     function createAddedCard(inputText) {
@@ -102,7 +99,9 @@
                 method: "DELETE"
             })
         })
-        card.appendChild(delButton)
+        if (id !== 0) {
+            //card.appendChild(delButton)
+        }
         theList.appendChild(card)
     }
 

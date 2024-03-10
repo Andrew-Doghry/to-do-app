@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/app.css">
+    <title>Document</title>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-slate-800">
+    <button class="w-[100px] button danger  capitalize delAll">delete all</button>
+
+</body>
+
+<script>
+    const deletetAll = document.querySelector(".delAll")
+    deletetAll.addEventListener('click', async (e) => {
+        document.querySelectorAll('.added-card').forEach(e => e.remove())
+        const resp = await fetch("http://localhost:3003/admin", {
+            method: "DELETE"
+        })
+    })
+
+</script>
+
+</html>
