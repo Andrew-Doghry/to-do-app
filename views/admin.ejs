@@ -17,7 +17,7 @@
     const deletetAll = document.querySelector(".delAll")
     deletetAll.addEventListener('click', async (e) => {
         document.querySelectorAll('.added-card').forEach(e => e.remove())
-        const resp = await fetch("http://localhost:3003/admin", {
+        const resp = await fetch(`${window.location.href}`, {
             method: "DELETE"
         })
     })

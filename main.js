@@ -36,8 +36,9 @@ app.delete('/:id', (req, res) => {
     console.log(id)
     tasks.DeleteOne(+id)
 })
-app.listen(3003, () => {
-    console.log('listening to port :8080')
+
+app.listen(process.env.PORT || 5000, () => {
+    console.log('listening to port :3003')
 })
 
 

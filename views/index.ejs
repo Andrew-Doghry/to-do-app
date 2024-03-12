@@ -51,7 +51,7 @@
             event.preventDefault();
             e.parentElement.remove()
             let key = +e.getAttribute("key")
-            await fetch(`http://localhost:3003/${key}`, {
+            await fetch(`${window.location.href + key}`, {
                 method: "DELETE"
             })
         })
@@ -64,7 +64,7 @@
                 id: id,
                 data: input.value
             }
-            const response = await fetch('http://localhost:3003/', {
+            const response = await fetch(`${window.location.href}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -95,7 +95,7 @@
         delButton.setAttribute("key", id)
         delButton.addEventListener('click', async (e) => {
             delButton.parentElement.remove()
-            await fetch(`http://localhost:3003/${delButton.getAttribute('key')}`, {
+            await fetch(`${window.location.href + delButton.getAttribute('key')}`, {
                 method: "DELETE"
             })
         })
